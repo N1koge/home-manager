@@ -8,9 +8,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, nix-darwin, ... }:
     let
       user = "ack";
     in {
@@ -30,8 +35,23 @@
         # to pass through arguments to home.nix
       };
 
+      darwinConfigurations = nix-darwin.lib.darwinSystem {
+        system = "aarch64_darwin";
+
+        extraSpecialArgs = {
+          user = user;
+          stateVersion = "23.11";
+        };
+
+        modules = [
+          self.homeModules.common
+          self.homeModules.darwin
+        ];
+      };
+
       homeModules = {
         common = import ./hosts;
+        darwin = import ./hosts/darwin;
       };
     };
 }
