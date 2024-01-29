@@ -13,11 +13,9 @@
   outputs = { self, nixpkgs, home-manager, ... }:
     let
       user = "ack";
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
     in {
       homeConfigurations."${user}" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
         extraSpecialArgs = {
           user = user;
