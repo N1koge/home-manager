@@ -10,20 +10,30 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, ... }:
     let
+      user = "ack";
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      homeConfigurations."ack" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations."${user}" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
+
+        extraSpecialArgs = {
+          user = user;
+          stateVersion = "23.11";
+        };
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
-        modules = [ ./home.nix ];
+        modules = [ self.homeModules.common ];
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
+      };
+
+      homeModules = {
+        common = import ./hosts;
       };
     };
 }
