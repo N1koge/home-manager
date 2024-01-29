@@ -77,5 +77,5 @@
     };
   };
 
-  imports = [ ../programs/neovim/index.nix ../modules/git/private.nix ];
+  imports = [ ../modules/neovim/index.nix ../modules/git/private.nix ];
 }
