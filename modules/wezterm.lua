@@ -11,5 +11,41 @@ if wezterm.config_builder then
 end
 
 config.color_scheme = 'tokyonight_moon'
+config.font = wezterm.font 'Fira Code'
+config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
+config.keys = {
+  {
+    key = '+',
+    mods = 'CMD|SHIFT', 
+    action = wezterm.action.SplitHorizontal {
+      domain = 'CurrentPaneDomain'
+    }
+  },
+  {
+    key = '_',
+    mods = 'CMD|SHIFT', 
+    action = wezterm.action.SplitVertical {
+      domain = 'CurrentPaneDomain'
+    }
+  },
+  {
+    key = 'w',
+    mods = 'CMD|SHIFT', 
+    action = wezterm.action.CloseCurrentPane {
+      confirm = true
+    }
+  },
+  {
+    key = '{',
+    mods = 'SHIFT|ALT',
+    action = wezterm.action.MoveTabRelative(-1),
+  },
+  {
+    key = '}',
+    mods = 'SHIFT|ALT',
+    action = wezterm.action.MoveTabRelative(1),
+  }
+}
+
 
 return config
