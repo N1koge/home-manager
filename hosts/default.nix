@@ -16,7 +16,11 @@
     pkgs.ripgrep
     pkgs.xclip
     pkgs.zig
+    (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
+
+  # fonts
+  fonts.fontconfig.enable = true;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
